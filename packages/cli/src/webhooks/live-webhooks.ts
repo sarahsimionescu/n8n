@@ -134,13 +134,15 @@ export class LiveWebhooks implements IWebhookManager {
 
 		return await new Promise((resolve, reject) => {
 			const executionMode = 'webhook';
+			// Extract pushRef from request headers to enable real-time execution updates
+			const pushRef = request.headers['push-ref'] as string | undefined;
 			void WebhookHelpers.executeWebhook(
 				workflow,
 				webhookData,
 				workflowData,
 				workflowStartNode,
 				executionMode,
-				undefined,
+				pushRef,
 				undefined,
 				undefined,
 				request,
